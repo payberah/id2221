@@ -1,4 +1,4 @@
-![hadoop Logo](/files/logo/hadoop.png)
+![hadoop Logo](logo/hadoop.png)
 # **Lab 1 - Hadoop MapReduce and HDFS**
 #### The following steps (Part 1 and Part 2) demonstrate how to install HDFS and create and run "word count" application with Hadoop MapReduce. Then, in Part 3, you are asked to implement ... with Hadoop MapReduce.
 
@@ -104,7 +104,7 @@ $HADOOP_HOME/bin/hdfs dfs -rm /sics/big
 $HADOOP_HOME/bin/hdfs dfs -rm -r /sics
 ```
 
-## ** Part 2: MapReduce **
+## Part 2: MapReduce
 
 ### Simple Word Count
 WordCount is a simple application that counts the number of occurrences of each word in a given input set. Below we will take a look at mapper and reducer in detail and then we present the complete code and show you how to compile and run the code.
