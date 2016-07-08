@@ -10,11 +10,11 @@ The following steps (Part 1 and Part 2) demonstrate how to install HDFS and crea
 [Hadoop](http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.4/hadoop-2.6.4.tar.gz)
 
 2. Set the environment variable.
-```bash
+   ```bash
 export JAVA_HOME="<JAVA PATH>"
 export HADOOP_HOME="<HADOOP PATH>/hadoop-2.6.4"
 export HADOOP_CONFIG="$HADOOP_HOME/etc/hadoop"
-```
+   ```
 
 3. Specify environment variables in `$HADOOP_CONFIG/hadoop-env.sh`.
 ```bash
