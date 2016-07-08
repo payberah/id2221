@@ -1,6 +1,6 @@
-<p align="center"><img src="logo/hadoop.png" alt="Hadoop Logo"/></p>
-# **Lab 1 - Hadoop MapReduce and HDFS**
-#### The following steps (Part 1 and Part 2) demonstrate how to install HDFS and create and run "word count" application with Hadoop MapReduce. Then, in Part 3, you are asked to implement ... with Hadoop MapReduce.
+<p align="center"><img src="logo/hadoop.png" alt="Hadoop Logo" width="350"/></p>
+# Lab 1 - Hadoop MapReduce and HDFS
+The following steps (Part 1 and Part 2) demonstrate how to install HDFS and create and run "word count" application with Hadoop MapReduce. Then, in Part 3, you are asked to implement ... with Hadoop MapReduce.
 
 ## Part 1: HDFS
 
@@ -111,33 +111,114 @@ WordCount is a simple application that counts the number of occurrences of each 
 
 #### Word Count Mapper
 ```java
-public static class Map extends MapReduceBase 
-    implements Mapper<LongWritable, Text, Text, IntWritable> {
-    private final static IntWritable one = new IntWritable(1);
+public static class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {
+  private final static IntWritable one = new IntWritable(1);
     private Text word = new Text();
 
-    public void map(LongWritable key, Text value, 
-        OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
-        String line = value.toString();
-        StringTokenizer tokenizer = new StringTokenizer(line);
-        while (tokenizer.hasMoreTokens()) {
-            word.set(tokenizer.nextToken());
-            output.collect(word, one);
-        }
-    }
+    public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+      String line = value.toString();
+      StringTokenizer tokenizer = new StringTokenizer(line);
+      while (tokenizer.hasMoreTokens()) {
+        word.set(tokenizer.nextToken());
+        output.collect(word, one);
+      }
+  }
 }
 ```
 
 The `Mapper<LongWritable, Text, Text, IntWritable>` refers to the data type of input and output key-value pairs specific to the mapper or rateher the map method, i.e., `Mapper<Input Key Type, Input Value Type, Output Key Type, Output Value Type>`. In our example, the input to a mapper is a single line, so this Text forms the input value. The input key would a long value assigned in default based on the position of Text in input file. Our output from the mapper is of the format "(Word, 1)" hence the data type of our output key value pair is `<Text(String),  IntWritable(int)>`.
 
-In the `map` method, the first and second parameter refer to the data type of the input Key and Value to the mapper. The third parameter is the output collector that does the job of taking the output data. With the output collector we need to specify the data types of the output Key and Value from the mapper. The fourth parameter is used to report the task status internally in Hadoop environment to avoid time outs.
+In the `map` method, the first and second parameter refer to the data type of the input key and value to the mapper. The third parameter is the output collector that does the job of taking the output data. With the output collector we need to specify the data types of the output key and value from the mapper. The fourth parameter is used to report the task status internally in Hadoop environment to avoid time outs.
 
 The functionality of the map method is as follows:
-1. Create a IntWritable variable ‘one’ with value as 1
+1. Create an `IntWritable` variable `one` with value as 1
 2. Convert the input line in Text type to a String
 3. Use a tokenizer to split the line into words
 4. Iterate through each word and a form key value pairs as
     1. Assign each work from the tokenizer(of String type) to a Text 'word'
-    2. Form key value pairs for each word as <word,one> and push it to the output collector
+    2. Form key value pairs for each word as (word, one) and push it to the output collector
     
-#### Word Count Mapper
+#### Word Count Reducer
+```java
+public static class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable> {
+  public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+    int sum = 0;
+    while (values.hasNext()) {
+      sum += values.next().get();
+    }
+
+    output.collect(key, new IntWritable(sum));
+  }
+}
+```
+
+In `Reducer<Text, IntWritable, Text, IntWritable>`, the first two parameters refer to data type of input key and value to the reducer and the last two refer to data type of output key and value. Our mapper emits output as (apple, 1), (grapes, 1), (apple, 1), etc. This is the input for reducer so here the data types of key and value in java would be `String` and `int`, the equivalent in Hadoop would be `Text` and `IntWritable`. Also we get the output as (word, num. of occurrences) so the data type of output Key Value would be `<Text, IntWritable>`.
+
+The input to reduce method from the mapper after the sort and shuffle phase would be the key with the list of associated values with it. For example here we have multiple values for a single key from our mapper like (apple, 1), (apple, 1), (apple, 1). This key-values would be fed into the reducer as (apple, [1, 1, 1]). In the `reduce` method, all the input parameters are hold the same functionality as that of a mapper, the only diference is with the input key-value. As mentioned earlier the input to a reducer instance is a key and list of values hence (`Text` key, `Iterator<IntWritable>` values). The next parameter denotes the output collector of the reducer with the data type of output key and value.
+
+The functionality of the reduce method is as follows:
+1. Initaize a variable `sum` as 0
+2. Iterate through all the values with respect to a key and sum up all of them
+3. Push to the output collector the Key and the obtained sum as value
+
+
+#### Driver Class
+In addition to mapper and reducer calsses, we need a driver class. This driver class is responsible for triggering the map reduce job in Hadoop. It is in this driver class that we provide the name of the job, output key value data types and the mapper and reducer classes. Bellow you see the complete code of the word count:
+```java
+import java.io.IOException;
+import java.util.*;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.conf.*;
+import org.apache.hadoop.io.*;
+import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.util.*;
+
+public class WordCount {
+
+  public static class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+	
+    public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+      String line = value.toString();
+      StringTokenizer tokenizer = new StringTokenizer(line);
+        while (tokenizer.hasMoreTokens()) {
+          word.set(tokenizer.nextToken());
+          output.collect(word, one);
+        }
+    }
+  }
+
+  public static class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable> {
+    public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+      int sum = 0;
+        while (values.hasNext()) {
+          sum += values.next().get();
+        }
+	
+        output.collect(key, new IntWritable(sum));
+    }
+  }
+
+  public static void main(String[] args) throws Exception {
+    JobConf conf = new JobConf(WordCount.class);
+    conf.setJobName("wordcount");
+
+    conf.setOutputKeyClass(Text.class);
+    conf.setOutputValueClass(IntWritable.class);
+
+    conf.setMapperClass(Map.class);
+    conf.setCombinerClass(Reduce.class);
+    conf.setReducerClass(Reduce.class);
+
+    conf.setInputFormat(TextInputFormat.class);
+    conf.setOutputFormat(TextOutputFormat.class);
+
+    FileInputFormat.setInputPaths(conf, new Path(args[0]));
+    FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+
+    JobClient.runJob(conf);
+  }
+}
+```
+
