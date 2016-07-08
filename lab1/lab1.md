@@ -126,7 +126,7 @@ public static class Map extends MapReduceBase implements Mapper<LongWritable, Te
 }
    ```
 
-The `Mapper<LongWritable, Text, Text, IntWritable>` refers to the data type of input and output key-value pairs specific to the mapper or rateher the map method, i.e., `Mapper<Input Key Type, Input Value Type, Output Key Type, Output Value Type>`. In our example, the input to a mapper is a single line, so this Text forms the input value. The input key would a long value assigned in default based on the position of Text in input file. Our output from the mapper is of the format "(Word, 1)" hence the data type of our output key value pair is `<Text(String),  IntWritable(int)>`.
+The `Mapper<LongWritable, Text, Text, IntWritable>` refers to the data type of input and output key-value pairs specific to the mapper or rateher the map method, i.e., `Mapper<Input Key Type, Input Value Type, Output Key Type, Output Value Type>`. In our example, the input to a mapper is a single line, so this Text forms the input value. The input key would a long value assigned in default based on the position of Text in input file. Our output from the mapper is of the format (Word, 1) hence the data type of our output key value pair is `<Text(String),  IntWritable(int)>`.
 
 In the `map` method, the first and second parameter refer to the data type of the input key and value to the mapper. The third parameter is the output collector that does the job of taking the output data. With the output collector we need to specify the data types of the output key and value from the mapper. The fourth parameter is used to report the task status internally in Hadoop environment to avoid time outs.
 
@@ -252,7 +252,7 @@ jar -cvf wordcount.jar -C wordcount_classes/ .
 hadoop jar wordcount.jar sics.WordCount input output
    ```
 
-4. Check the output in hdfs
+4. Check the output in HDFS
    ```bash
 hdfs dfs -ls output
 hdfs dfs -cat output/part-00000
