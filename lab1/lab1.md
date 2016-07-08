@@ -235,7 +235,6 @@ hdfs dfs -put file0 input/file0
 hdfs dfs -put file1 input/file1
 hdfs dfs -ls input
 ```
-
 2. Change directory to the `src` folder and make a target directory, `wordcount_classes`, to keep the compiled files. Then, compile the code and make a final jar file.
 ```bash
 cd src
@@ -246,7 +245,6 @@ javac -classpath $HADOOP_HOME/share/hadoop/common/hadoop-common-2.2.0.jar:$HADOO
 
 jar -cvf wordcount.jar -C wordcount_classes/ .
 ```
-
 3. Run the application
 ```bash
 hadoop jar wordcount.jar sics.WordCount input output
