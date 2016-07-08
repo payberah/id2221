@@ -10,7 +10,7 @@ This course consists of four lab assignments that span over different subjects o
 ## Lab Assignments Environment
 We have used the IPython/Jupyter notebooks for the lab assignments. Notebooks are documents that contain both the programming code (e.g., python or scala), as well as human-readable text elements (e.g., paragraph, figures, and links). Since we are using Scala programming language and Spark platform in our assignments, in addition to IPthon/Jupyter, we also need to install ISpark. Below, we first explain how to install IPython/Jupyter, and then present the ISpark installation steps. Note that these steps are given for a Linux operating system, so if you do not have Linux, you need to install it either on your machine or on a VirtualBox. You can download VirtualBox from its [page](https://www.virtualbox.org). You can also find different ready to use Linux distribution images for VirtualBox [here](http://www.osboxes.org/ubuntu)}.
 
-### IPython Installation}
+### IPython Installation
 The steps to install IPython/Jupyter:
 
 1. Install `pip`, the package management system used to install and manage software packages written in Python.
@@ -87,6 +87,7 @@ c.KernelManager.kernel_cmd = [spark_home+"/bin/spark-submit",
   "--profile", "{connection_file}", 
   "--parent"]
    ```
+
 6. Run and test the notebook.
    ```bash
 ipython notebook --profile=spark --debug
