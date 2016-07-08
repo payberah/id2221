@@ -319,7 +319,7 @@ public static class TopTenReducer extends Reducer<NullWritable, Text, NullWritab
    ```
 
 ### The Input Data
-The given input, `users.xml` is in XML format with the following syntax:
+The input file, `users.xml`, is in XML format with the following syntax:
    ```xml
 <row Id="-1" Reputation="1"
   CreationDate="2014-05-13T21:29:22.820" DisplayName="Community"
@@ -329,5 +329,5 @@ The given input, `users.xml` is in XML format with the following syntax:
   Views="0" UpVotes="506"
   DownVotes="37" AccountId="-1" />
    ```
-You can use `transformXmlToMap` method to read and parse XML files.
+You can use `transformXmlToMap` method to read and parse XML files. The file is `topten/data` folder.
 
