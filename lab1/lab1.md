@@ -1,4 +1,4 @@
-![hadoop Logo](logo/hadoop.png)
+-> ![hadoop Logo](logo/hadoop.png) <-
 # **Lab 1 - Hadoop MapReduce and HDFS**
 #### The following steps (Part 1 and Part 2) demonstrate how to install HDFS and create and run "word count" application with Hadoop MapReduce. Then, in Part 3, you are asked to implement ... with Hadoop MapReduce.
 
