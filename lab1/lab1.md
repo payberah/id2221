@@ -292,7 +292,7 @@ public static class TopTenMapper extends Mapper<Object, Text, NullWritable, Text
 }
    ```
 
-### The Reducer Code.
+### The Reducer Code
 The reducer determines its top ten records in a way that's very similar to the mapper. Because we configured our job to have one reducer using `job.setNumReduceTasks(1)` and we used `NullWritable` as our key, there will be one input group for this reducer that contains all the potential top ten records. The reducer iterates through all these records and stores them in a `TreeMap`. After all the values have been iterated over, the values contained in the `TreeMap` are flushed to the file system in descending order. 
    ```java
 public static class TopTenReducer extends Reducer<NullWritable, Text, NullWritable, Text> {
@@ -317,4 +317,17 @@ public static class TopTenReducer extends Reducer<NullWritable, Text, NullWritab
   }
 }
    ```
+
+### The Input Data
+The given input, `users.xml` is in XML format with the following syntax:
+   ```xml
+<row Id="-1" Reputation="1"
+  CreationDate="2014-05-13T21:29:22.820" DisplayName="Community"
+  LastAccessDate="2014-05-13T21:29:22.820"
+  WebsiteUrl="http://meta.stackexchange.com/"
+  Location="on the server farm" AboutMe="..;"
+  Views="0" UpVotes="506"
+  DownVotes="37" AccountId="-1" />
+   ```
+You can use `transformXmlToMap` method to read and parse XML files.
 
