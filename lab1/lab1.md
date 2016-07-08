@@ -227,11 +227,9 @@ Let's assume we have two files, `file0` and `file1`, uploaded on HDFS, and our c
 
 1. Start the HDFS namenode and datanode (if they are not running). Then create a folder `input` in HDFS, and upload the files in it.
 ```sh
-# Start the daemons
-> hadoop-daemon.sh start namenode
-> hadoop-daemon.sh start datanode
+hadoop-daemon.sh start namenode
+hadoop-daemon.sh start datanode
 
-# Copy the input files into hdfs
 hdfs dfs -mkdir -p input
 hdfs dfs -put file0 input/file0
 hdfs dfs -put file1 input/file1
@@ -244,7 +242,7 @@ cd src
 
 mkdir wordcount_classes
 
-> javac -classpath $HADOOP_HOME/share/hadoop/common/hadoop-common-2.2.0.jar:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.2.0.jar:$HADOOP_HOME/share/hadoop/common/lib/commons-cli-1.2.jar -d wordcount_classes sics/WordCount.java
+javac -classpath $HADOOP_HOME/share/hadoop/common/hadoop-common-2.2.0.jar:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.2.0.jar:$HADOOP_HOME/share/hadoop/common/lib/commons-cli-1.2.jar -d wordcount_classes sics/WordCount.java
 
 jar -cvf wordcount.jar -C wordcount_classes/ .
 ```
