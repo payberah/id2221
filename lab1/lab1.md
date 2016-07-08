@@ -17,18 +17,18 @@ export HADOOP_CONFIG="$HADOOP_HOME/etc/hadoop"
    ```
 
 3. Specify environment variables in `$HADOOP_CONFIG/hadoop-env.sh`.
-```bash
+   ```bash
 export JAVA_HOME="<JAVA PATH>"
-```
+   ```
 
 4. Make three folders on local file system, where HDFS namenode and datanode store their data.
-```bash
+   ```bash
 mkdir -p $HADOOP_HOME/hdfs/namenode
 mkdir -p $HADOOP_HOME/hdfs/datanode
-```
+   ```
 
 5. The main HDFS configuration file is located at `$HADOOP_CONFIG/hdfs-site.xml`. Specify the folders path, built in step 4.
-```xml
+   ```xml
 <configuration>
   <property>
     <name>dfs.namenode.name.dir</name>
@@ -42,10 +42,10 @@ mkdir -p $HADOOP_HOME/hdfs/datanode
     <description>Comma separated list of paths on the local filesystem of a DataNode where it should store its blocks.</description>
   </property>
 </configuration>
-```
+   ```
 
 6. Specify the address of the namenode (master) in `$HADOOP_CONFIG/core-site.sh`.
-```xml
+   ```xml
 <configuration>
   <property>
     <name>fs.defaultFS</name>
@@ -53,18 +53,18 @@ mkdir -p $HADOOP_HOME/hdfs/datanode
     <description>NameNode URI</description>
   </property>
 </configuration>
-```
+   ```
 
 7. Format the namenode directory (DO THIS ONLY ONCE, THE FIRST TIME).
-```bash
+   ```bash
 $HADOOP_HOME/bin/hdfs namenode -format
-```
+   ```
 
 8. Start the namenode and datanode daemons
-```bash
+   ```bash
 $HADOOP_HOME/sbin/hadoop-daemon.sh start namenode
 $HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
-```
+   ```
 
 ### Test HDFS
 1. Prints out the HDFS running processes, by running the `jps` command in a terminal.
@@ -72,7 +72,7 @@ $HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
    - Namenode: [http://127.0.0.1:50070](http://127.0.0.1:50070)
    - Datanode: [http://127.0.0.1:50075](http://127.0.0.1:50075)
 3. Try HDFS commands
-```bash
+   ```bash
 # Create a new directory /sics on HDFS
 $HADOOP_HOME/bin/hdfs dfs -mkdir /sics
 
@@ -102,7 +102,7 @@ $HADOOP_HOME/bin/hdfs dfs -rm /sics/big
    
 # Delete /sics directory from HDFS
 $HADOOP_HOME/bin/hdfs dfs -rm -r /sics
-```
+   ```
 
 ## Part 2: MapReduce
 
@@ -110,7 +110,7 @@ $HADOOP_HOME/bin/hdfs dfs -rm -r /sics
 WordCount is a simple application that counts the number of occurrences of each word in a given input set. Below we will take a look at mapper and reducer in detail and then we present the complete code and show you how to compile and run the code.
 
 #### Word Count Mapper
-```java
+   ```java
 public static class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {
   private final static IntWritable one = new IntWritable(1);
     private Text word = new Text();
@@ -124,7 +124,7 @@ public static class Map extends MapReduceBase implements Mapper<LongWritable, Te
       }
   }
 }
-```
+   ```
 
 The `Mapper<LongWritable, Text, Text, IntWritable>` refers to the data type of input and output key-value pairs specific to the mapper or rateher the map method, i.e., `Mapper<Input Key Type, Input Value Type, Output Key Type, Output Value Type>`. In our example, the input to a mapper is a single line, so this Text forms the input value. The input key would a long value assigned in default based on the position of Text in input file. Our output from the mapper is of the format "(Word, 1)" hence the data type of our output key value pair is `<Text(String),  IntWritable(int)>`.
 
@@ -139,7 +139,7 @@ The functionality of the map method is as follows:
     2. Form key value pairs for each word as (word, one) and push it to the output collector
     
 #### Word Count Reducer
-```java
+   ```java
 public static class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable> {
   public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
     int sum = 0;
@@ -150,7 +150,7 @@ public static class Reduce extends MapReduceBase implements Reducer<Text, IntWri
     output.collect(key, new IntWritable(sum));
   }
 }
-```
+   ```
 
 In `Reducer<Text, IntWritable, Text, IntWritable>`, the first two parameters refer to data type of input key and value to the reducer and the last two refer to data type of output key and value. Our mapper emits output as (apple, 1), (grapes, 1), (apple, 1), etc. This is the input for reducer so here the data types of key and value in java would be `String` and `int`, the equivalent in Hadoop would be `Text` and `IntWritable`. Also we get the output as (word, num. of occurrences) so the data type of output Key Value would be `<Text, IntWritable>`.
 
@@ -164,7 +164,7 @@ The functionality of the reduce method is as follows:
 
 #### Driver Class
 In addition to mapper and reducer calsses, we need a driver class. This driver class is responsible for triggering the map reduce job in Hadoop. It is in this driver class that we provide the name of the job, output key value data types and the mapper and reducer classes. Bellow you see the complete code of the word count:
-```java
+   ```java
 import java.io.IOException;
 import java.util.*;
 import org.apache.hadoop.fs.Path;
@@ -220,13 +220,13 @@ public class WordCount {
     JobClient.runJob(conf);
   }
 }
-```
+   ```
 
 #### Compile and Run The Code
 Let's assume we have two files, `file0` and `file1`, uploaded on HDFS, and our code reads those files and counts their words.
 
 1. Start the HDFS namenode and datanode (if they are not running). Then create a folder `input` in HDFS, and upload the files in it.
-```sh
+   ```bash
 hadoop-daemon.sh start namenode
 hadoop-daemon.sh start datanode
 
@@ -234,9 +234,10 @@ hdfs dfs -mkdir -p input
 hdfs dfs -put file0 input/file0
 hdfs dfs -put file1 input/file1
 hdfs dfs -ls input
-```
+   ```
+
 2. Change directory to the `src` folder and make a target directory, `wordcount_classes`, to keep the compiled files. Then, compile the code and make a final jar file.
-```bash
+   ```bash
 cd src
 
 mkdir wordcount_classes
@@ -244,15 +245,17 @@ mkdir wordcount_classes
 javac -classpath $HADOOP_HOME/share/hadoop/common/hadoop-common-2.2.0.jar:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.2.0.jar:$HADOOP_HOME/share/hadoop/common/lib/commons-cli-1.2.jar -d wordcount_classes sics/WordCount.java
 
 jar -cvf wordcount.jar -C wordcount_classes/ .
-```
+   ```
+
 3. Run the application
-```bash
+   ```bash
 hadoop jar wordcount.jar sics.WordCount input output
-```
+   ```
+
 4. Check the output in hdfs
-```bash
+   ```bash
 hdfs dfs -ls output
 hdfs dfs -cat output/part-00000
-```
+   ```
 
 
