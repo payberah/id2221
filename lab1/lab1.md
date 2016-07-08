@@ -1,6 +1,6 @@
 <p align="center"><img src="logo/hadoop.png" alt="Hadoop Logo" width="350"/></p>
-# Lab 1 - Hadoop MapReduce and HDFS
-The following steps (Part 1 and Part 2) demonstrate how to install HDFS and create and run "word count" application with Hadoop MapReduce. Then, in Part 3, you are asked to implement ... with Hadoop MapReduce.
+# Hadoop MapReduce and HDFS
+The following steps (Part 1 and Part 2) demonstrate how to install HDFS and create and run "word count" application with Hadoop MapReduce. Then, in Part 3, you are asked to implement a MapReduce code to get the top ten users by their reputation from a list.
 
 ## Part 1: HDFS
 
@@ -258,4 +258,63 @@ hdfs dfs -ls output
 hdfs dfs -cat output/part-00000
    ```
 
+## Part 3: Top Ten
+Given a list of user information, output the information of the top ten users based on reputation. In your code, each mapper determines the top ten records of its input split and outputs them to the reduce phase. The mappers are filtering their input split to the top ten records, and the reducer is responsible for the final ten. Use `setNumReduceTasks` to configure your job to use only one reducer, because multiple reducers would shard the data and would result in multiple top ten lists.
+
+### The Mapper Code
+You can use `TreeMap` structure in the mapper to store the processed input records. A `TreeMap` is a subclass of `Map` that sorts on key. After all the records have been processed, the top ten records in the `TreeMap` are output to the reducers in the `cleanup` method. This method gets called once after all key-value pairs have been through map.
+
+   ```java
+public static class TopTenMapper extends Mapper<Object, Text, NullWritable, Text> {
+  // Stores a map of user reputation to the record
+  private TreeMap<Integer, Text> repToRecordMap = new TreeMap<Integer, Text>();
+
+  public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+    Map<String, String> parsed = <FILL IN>
+    String userId = <FILL IN>
+    String reputation = <FILL IN>
+
+    // Add this record to our map with the reputation as the key
+    repToRecordMap.<FILL IN>
+
+    // If we have more than ten records, remove the one with the lowest reputation.
+    if (repToRecordMap.size() > 10) {
+      <FILL IN>
+    }
+  }
+
+  protected void cleanup(Context context) throws IOException, InterruptedException {
+    // Output our ten records to the reducers with a null key
+    for (Text t : repToRecordMap.values()) {
+      context.write(NullWritable.get(), t);
+    }
+  }
+}
+   ```
+
+### The Reducer Code.
+The reducer determines its top ten records in a way that's very similar to the mapper. Because we configured our job to have one reducer using `job.setNumReduceTasks(1)` and we used `NullWritable` as our key, there will be one input group for this reducer that contains all the potential top ten records. The reducer iterates through all these records and stores them in a `TreeMap`. After all the values have been iterated over, the values contained in the `TreeMap` are flushed to the file system in descending order. 
+   ```java
+public static class TopTenReducer extends Reducer<NullWritable, Text, NullWritable, Text> {
+  // Stores a map of user reputation to the record
+  // Overloads the comparator to order the reputations in descending order
+  private TreeMap<Integer, Text> repToRecordMap = new TreeMap<Integer, Text>();
+
+  public void reduce(NullWritable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
+    for (Text value : values) {
+      repToRecordMap.<FILL IN>;
+
+      // If we have more than ten records, remove the one with the lowest reputation
+      if (repToRecordMap.size() > 10) {
+        <FILL IN>
+      }
+    }
+
+    for (Text t : repToRecordMap.descendingMap().values()) {
+    // Output our ten records to the file system with a null key
+      context.write(NullWritable.get(), t);
+    }
+  }
+}
+   ```
 
