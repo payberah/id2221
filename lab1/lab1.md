@@ -222,3 +222,41 @@ public class WordCount {
 }
 ```
 
+#### Compile and Run The Code
+Let's assume we have two files, `file0` and `file1`, uploaded on HDFS, and our code reads those files and counts their words.
+
+1. Start the HDFS namenode and datanode (if they are not running). Then create a folder `input` in HDFS, and upload the files in it.
+```sh
+# Start the daemons
+> hadoop-daemon.sh start namenode
+> hadoop-daemon.sh start datanode
+
+# Copy the input files into hdfs
+hdfs dfs -mkdir -p input
+hdfs dfs -put file0 input/file0
+hdfs dfs -put file1 input/file1
+hdfs dfs -ls input
+```
+
+2. Change directory to the `src` folder and make a target directory, `wordcount_classes`, to keep the compiled files. Then, compile the code and make a final jar file.
+```bash
+cd src
+
+mkdir wordcount_classes
+
+> javac -classpath $HADOOP_HOME/share/hadoop/common/hadoop-common-2.2.0.jar:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.2.0.jar:$HADOOP_HOME/share/hadoop/common/lib/commons-cli-1.2.jar -d wordcount_classes sics/WordCount.java
+
+jar -cvf wordcount.jar -C wordcount_classes/ .
+```
+
+3. Run the application
+```bash
+hadoop jar wordcount.jar sics.WordCount input output
+```
+4. Check the output in hdfs
+```bash
+hdfs dfs -ls output
+hdfs dfs -cat output/part-00000
+```
+
+
