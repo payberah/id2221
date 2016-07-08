@@ -38,7 +38,7 @@ export PYSPARK_SUBMIT_ARGS="--master local[2] pyspark-shell"
 ipython profile create pyspark
    ```
 
-6. Edit the created profile by copying the following lines in `00-pyspark-setup.py`. This file is at `~/.ipython/profile\_pyspark/startup/00-pyspark-setup.py`.
+6. Edit the created profile by copying the following lines in `00-pyspark-setup.py`. This file is at `~/.ipython/profile_pyspark/startup/00-pyspark-setup.py`.
    ```python
 import os
 import sys
@@ -83,7 +83,7 @@ c.KernelManager.kernel_cmd = [spark_home+"/bin/spark-submit",
   "--master", master,
   "--class", "org.tribbloid.ispark.Main",
   "--executor-memory", "2G",
-  "--jars", "<A PATH ON YOUR MACIHE>/ispark-core-assembly-0.2.0-SNAPSHOT.jar",
+  "--jars", "<PATH ON YOUR MACIHE>/ispark-core-assembly-0.2.0-SNAPSHOT.jar",
   "--profile", "{connection_file}", 
   "--parent"]
    ```
