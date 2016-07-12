@@ -40,8 +40,8 @@ import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, Produce
 import kafka.serializer.{DefaultDecoder, StringDecoder}
 
 // Create a local StreamingContext with two working thread and batch interval of 2 second
-val sparkConf = new SparkConf().setAppName("KafkaStreamAvg").setMaster(<FILL IN>)
-val ssc = new StreamingContext(<FILL IN>)
+val sparkConf = new SparkConf().setAppName("KafkaStreamAvg").setMaster(<FILL_IN>)
+val ssc = new StreamingContext(<FILL_IN>)
 ```
 #### Saving of the generated RDDs to reliable storage (data checkpointing) is necessary in some stateful transformations that combine data across multiple batches. In such transformations, the generated RDDs depend on RDDs of previous batches, which causes the length of the dependency chain to keep increasing with time. To avoid such unbounded increases in recovery time, intermediate RDDs of stateful transformations are periodically checkpointed to reliable storage (e.g., HDFS) to cut off the dependency chains. Moreover, checkpointing must be enabled for applications with stateful transformations, e.g., mapWithState. You can enable it by setting a directory in a fault-tolerant, reliable file system to which the checkpoint information will be saved. This is done by using `streamingContext.checkpoint(checkpointDirectory)`. This will allow you to use the aforementioned stateful transformations. 
 ```scala
@@ -66,22 +66,22 @@ val kafkaConf = Map(
 #### Message are read from Kafka as key and values. In this application we do not make any use of the key. To be able to easily split the message into individual part we use a String type and StringDecoder for the value of the message. The value part of the messages are strings of "String,int", so, you need to split it by "," and make pairs of `(String, int)` 
 
 ```scala
-val messages = KafkaUtils.createStream[String, String, StringDecoder, StringDecoder](<FILL IN>)
+val messages = KafkaUtils.createStream[String, String, StringDecoder, StringDecoder](<FILL_IN>)
 //or
-val messages = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](<FILL IN>)
+val messages = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](<FILL_IN>)
 
-val values = messages.map(<FILL IN>)
-val pairs = values.<FILL IN>
+val values = messages.map(<FILL_IN>)
+val pairs = values.<FILL_IN>
 ```
 
 #### Then, you need to measure the average of the values for receiving pairs `(String, int)`, and update the average continuesly as you receive new paris. You can use `mapWithState` with a function as its input to sum of the values for each `String` key and calculate the average.
 
 ```scala
 def mappingFunc(key: String, value: Option[Double], state: State[Double]): Option[(String, Double)] = {
-    <FILL IN>
+    <FILL_IN>
 }
 
-val stateDstream = pairs.mapWithState(<FILL IN>)
+val stateDstream = pairs.mapWithState(<FILL_IN>)
 ```
 #### Note that when these lines are executed, Spark Streaming only sets up the computation it will perform when it is started, and no real processing has started yet. To start the processing after all the transformations have been setup, you need to start the computation.
 
