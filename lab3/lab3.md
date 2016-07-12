@@ -63,7 +63,7 @@ val kafkaConf = Map(
     "zookeeper.connection.timeout.ms" -> "1000")
 ```
 
-#### Message are read from Kafka as key and values. In this application we do not make any use of the key. To be able to easily split the message into individual part we use a String type and StringDecoder for the value of the message. The value part of the messages are strings of "String,int", so, you need to split it by "," and make pairs of `(String, int)` 
+#### Message are read from Kafka as key and values. In this application we do not make any use of the key. To be able to easily split the message into individual part we use a String type and StringDecoder for the value of the message. The value part of the messages are strings of "String,int", so, you need to split it by "," and make pairs of `(String, int)`.
 
 ```scala
 val messages = KafkaUtils.createStream[String, String, StringDecoder, StringDecoder](<FILL_IN>)
