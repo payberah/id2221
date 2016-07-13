@@ -3,7 +3,7 @@ This course consists of four lab assignments that span over different subjects o
 
 * **Lab 1:** In the first lab assignment you will practice the basics of the data intensive programming by setting up HDFS and Hadoop MapReduce and implementing a simple application on them.
 * **Lab 2:** The second lab assignment is based of the Spark and Spark SQL, and you will learn how to use them to process and analyze data.
-* **Lab 3:** The concentration of the lab assignment is to process streaming data. You will work with Spark Streaming in this lab to process data on-line as it flows.
+* **Lab 3:** The concentration of this lab assignment is to process streaming data. You will work with Spark Streaming in this lab to process data on-line as it flows.
 * **Lab 4:** In the last assignment you will work with GraphX to process graph-based data.
 
 
