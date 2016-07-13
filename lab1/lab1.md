@@ -167,7 +167,7 @@ The functionality of the reduce method is as follows:
 
 
 #### Driver Class
-In addition to mapper and reducer calsses, we need a "driver" class to trigger the MapReduce job in Hadoop. In the driver class we provide the name of the job, output key value data types and the mapper and reducer classes. Bellow you see the complete code of the word count:
+In addition to mapper and reducer calsses, we need a "driver" class to trigger the MapReduce job in Hadoop. In the driver class we provide the name of the job, output key-value data types and the mapper and reducer classes. Bellow you see the complete code of the "word count":
    ```java
 import java.io.IOException;
 import java.util.*;
@@ -227,7 +227,7 @@ public class WordCount {
    ```
 
 #### Compile and Run The Code
-Let's assume we have two files, `file0` and `file1`, uploaded on HDFS, and our code reads those files and counts their words.
+Assume we have two input files, `file0` and `file1`, uploaded on HDFS, and our code reads those files and counts their words.
 
 1. Start the HDFS namenode and datanode (if they are not running). Then create a folder `input` in HDFS, and upload the files in it.
    ```bash
