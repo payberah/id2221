@@ -13,7 +13,7 @@ object SGen {
 
     val config = new ProducerConfig(props)
     val producer = new Producer[String, String](config)
-    val topic = "input"
+    val topic = "avg"
 
     while (true) {
       Thread.sleep(10)
