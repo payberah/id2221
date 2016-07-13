@@ -131,7 +131,7 @@ In the `map` method, the first and second parameter refer to the data type of th
 
 The functionality of the map method is as follows:
 
-1. CCreate an `IntWritable` variable `one` with value as 1
+1. Create an `IntWritable` variable `one` with value as 1
 
 2. Convert the input line in Text type to a String
 
@@ -160,8 +160,11 @@ In `Reducer<Text, IntWritable, Text, IntWritable>`, the first two parameters ref
 The input to reduce method from the mapper after the sort and shuffle phase would be the key with the list of associated values with it. For example here we have multiple values for a single key from our mapper like (apple, 1), (apple, 1), (apple, 1). This key-values would be fed into the reducer as (apple, [1, 1, 1]). In the `reduce` method, all the input parameters are hold the same functionality as that of a mapper, the only diference is with the input key-value. As mentioned earlier the input to a reducer instance is a key and list of values hence (`Text` key, `Iterator<IntWritable>` values). The next parameter denotes the output collector of the reducer with the data type of output key and value.
 
 The functionality of the reduce method is as follows:
+
 1. Initaize a variable `sum` as 0
+
 2. Iterate through all the values with respect to a key and sum up all of them
+
 3. Push to the output collector the Key and the obtained sum as value
 
 
