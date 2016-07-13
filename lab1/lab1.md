@@ -8,7 +8,7 @@ The following steps (Part 1 and Part 2) demonstrate how to install HDFS and buil
 
 1. Download the Hadoop platform from [here](http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.4/hadoop-2.6.4.tar.gz).
 
-2. Set the following environment variable.
+2. Set the following environment variables.
    ```bash
 export JAVA_HOME="<JAVA PATH>"
 export HADOOP_HOME="<HADOOP PATH>/hadoop-2.6.4"
@@ -20,7 +20,7 @@ export HADOOP_CONFIG="$HADOOP_HOME/etc/hadoop"
 export JAVA_HOME="<JAVA PATH>"
    ```
 
-4. Make three folders on local file system, where HDFS namenode and datanode store their data.
+4. Make two folders on local file system, where HDFS namenode and datanode store their data.
    ```bash
 mkdir -p $HADOOP_HOME/hdfs/namenode
 mkdir -p $HADOOP_HOME/hdfs/datanode
