@@ -263,7 +263,7 @@ hdfs dfs -cat output/part-00000
    ```
 
 ## Part 3: Top Ten
-Given the list of user information, print out the information of the top ten users based on their reputation. In your code, each mapper determines the top ten records of its input split and outputs them to the reduce phase. The mappers are filtering their input split to the top ten records, and the reducer is responsible for the final ten. Use `setNumReduceTasks` to configure your job to use only one reducer, because multiple reducers would shard the data and would result in multiple top ten lists.
+The source code and the input data of this part is in the `topten` folder. Given the list of user information, print out the information of the top ten users based on their reputation. In your code, each mapper determines the top ten records of its input split and outputs them to the reduce phase. The mappers are filtering their input split to the top ten records, and the reducer is responsible for the final ten. Use `setNumReduceTasks` to configure your job to use only one reducer, because multiple reducers would shard the data and would result in multiple top ten lists.
 
 ### The Mapper Code
 You can use `TreeMap` structure in the mapper to store the processed input records. A `TreeMap` is a subclass of `Map` that sorts on key. After all the records have been processed, the top ten records in the `TreeMap` are output to the reducers in the `cleanup` method. This method gets called once after all key-value pairs have been through map.
@@ -333,5 +333,5 @@ The input file, `users.xml`, is in XML format with the following syntax:
   Views="0" UpVotes="506"
   DownVotes="37" AccountId="-1" />
    ```
-You can use `transformXmlToMap` method to read and parse XML files. The file is `topten/data` folder.
+You can use `transformXmlToMap` method to read and parse XML files. The file is in the `topten/data` folder.
 
