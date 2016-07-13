@@ -94,5 +94,5 @@ ipython notebook --profile=spark --debug
    ```
 
 ## Things To Deliver
-The assignments can be done individually or in group of two. For the labs 1 and 3, you should hand in the implemented codes in a zip file, and for the other labs, you just need to deliver the completed IPython files.
+The assignments can be done individually or in group of two. For the labs 1 and 3, you should hand in the implemented codes in zip files, and for the other labs, you just need to deliver the completed IPython files.
 
