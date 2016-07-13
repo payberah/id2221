@@ -159,11 +159,11 @@ The input to reduce method from the mapper after the sort and shuffle phase woul
 
 The functionality of the reduce method is as follows:
 
-1. Initaize a variable `sum` as 0
+1. Initaize a variable `sum` as 0.
 
-2. Iterate through all the values with respect to a key and sum up all of them
+2. Iterate through all the values with respect to a key and sum up all of them.
 
-3. Push to the output collector the Key and the obtained sum as value
+3. Push to the output collector, the key and the obtained sum as value.
 
 
 #### Driver Class
