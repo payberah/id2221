@@ -1,22 +1,21 @@
 <p align="center"><img src="logo/hadoop.png" alt="Hadoop Logo" width="350"/></p>
 # Hadoop MapReduce and HDFS
-The following steps (Part 1 and Part 2) demonstrate how to install HDFS and create and run "word count" application with Hadoop MapReduce. Then, in Part 3, you are asked to implement a MapReduce code to get the top ten users by their reputation from a list.
+The following steps (Part 1 and Part 2) demonstrate how to install HDFS and build and run "word count" application with Hadoop MapReduce. Then, in Part 3, you are asked to implement a MapReduce code to get the top ten users by their reputation from a list.
 
 ## Part 1: HDFS
 
 ### Install HDFS
 
-1. Download the Hadoop platform from the following link:
-[Hadoop](http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.4/hadoop-2.6.4.tar.gz)
+1. Download the Hadoop platform from [here](http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.4/hadoop-2.6.4.tar.gz).
 
-2. Set the environment variable.
+2. Set the following environment variable.
    ```bash
 export JAVA_HOME="<JAVA PATH>"
 export HADOOP_HOME="<HADOOP PATH>/hadoop-2.6.4"
 export HADOOP_CONFIG="$HADOOP_HOME/etc/hadoop"
    ```
 
-3. Specify environment variables in `$HADOOP_CONFIG/hadoop-env.sh`.
+3. Specify the `JAVA_HOME` environment variable in `$HADOOP_CONFIG/hadoop-env.sh`.
    ```bash
 export JAVA_HOME="<JAVA PATH>"
    ```
