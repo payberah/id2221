@@ -155,7 +155,7 @@ public static class Reduce extends MapReduceBase implements Reducer<Text, IntWri
 
 In `Reducer<Text, IntWritable, Text, IntWritable>`, the first two parameters refer to data type of input key and value to the reducer and the last two refer to data type of output key and value. Our mapper emits output as (apple, 1), (grapes, 1), (apple, 1), etc. This is the input for reducer so here the data types of key and value in java would be `String` and `int`, the equivalent in Hadoop would be `Text` and `IntWritable`. Also we get the output as (word, num. of occurrences) so the data type of output Key Value would be `<Text, IntWritable>`.
 
-The input to reduce method from the mapper after the sort and shuffle phase would be the key with the list of associated values with it. For example here we have multiple values for a single key from our mapper like (apple, 1), (apple, 1), (apple, 1). These key-values would be fed into the reducer as (apple, [1, 1, 1]), which is a key and list of values hence (`Text` key, `Iterator<IntWritable>` values). The next parameter to the `reduce` method denotes the output collector of the reducer with the data type of output key and value.
+The input to reduce method from the mapper after the sort and shuffle phase would be the key with the list of associated values with it. For example here we have multiple values for a single key from our mapper like (apple, 1), (apple, 1), (apple, 1). These key-values would be fed into the reducer as (apple, [1, 1, 1]), which is a key and list of values (`Text` key, `Iterator<IntWritable>` values). The next parameter to the `reduce` method denotes the output collector of the reducer with the data type of output key and value.
 
 The functionality of the reduce method is as follows:
 
