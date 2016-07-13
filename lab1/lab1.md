@@ -43,7 +43,7 @@ mkdir -p $HADOOP_HOME/hdfs/datanode
 </configuration>
    ```
 
-6. Specify the address of the namenode (master) in `$HADOOP_CONFIG/core-site.sh`.
+6. Specify the URI of the namenode (master) in `$HADOOP_CONFIG/core-site.sh`.
    ```xml
 <configuration>
   <property>
@@ -106,7 +106,7 @@ $HADOOP_HOME/bin/hdfs dfs -rm -r /sics
 ## Part 2: MapReduce
 
 ### Simple Word Count
-WordCount is a simple application that counts the number of occurrences of each word in a given input set. Below we will take a look at mapper and reducer in detail and then we present the complete code and show you how to compile and run the code.
+WordCount is a simple application that counts the number of occurrences of each word in a given input set. Below we will take a look at the mapper and reducer in detail, and then we present the complete code and show how to compile and run it.
 
 #### Word Count Mapper
    ```java
