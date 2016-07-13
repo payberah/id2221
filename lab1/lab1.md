@@ -167,7 +167,7 @@ The functionality of the reduce method is as follows:
 
 
 #### Driver Class
-In addition to mapper and reducer calsses, we need a "driver" class to trigger the MapReduce job in Hadoop. It is in this driver class that we provide the name of the job, output key value data types and the mapper and reducer classes. Bellow you see the complete code of the word count:
+In addition to mapper and reducer calsses, we need a "driver" class to trigger the MapReduce job in Hadoop. It the driver class we provide the name of the job, output key value data types and the mapper and reducer classes. Bellow you see the complete code of the word count:
    ```java
 import java.io.IOException;
 import java.util.*;
