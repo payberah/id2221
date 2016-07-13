@@ -231,13 +231,13 @@ Assume we have two input files, `file0` and `file1`, uploaded on HDFS, and our c
 
 1. Start the HDFS namenode and datanode (if they are not running). Then create a folder `input` in HDFS, and upload the files in it.
    ```bash
-hadoop-daemon.sh start namenode
-hadoop-daemon.sh start datanode
+$HADOOP_HOME/sbin/hadoop-daemon.sh start namenode
+$HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
 
-hdfs dfs -mkdir -p input
-hdfs dfs -put file0 input/file0
-hdfs dfs -put file1 input/file1
-hdfs dfs -ls input
+$HADOOP_HOME/bin/hdfs dfs -mkdir -p input
+$HADOOP_HOME/bin/hdfs dfs -put file0 input/file0
+$HADOOP_HOME/bin/hdfs dfs -put file1 input/file1
+$HADOOP_HOME/bin/hdfs dfs -ls input
    ```
 
 2. Change directory to the `src` folder and make a target directory, `wordcount_classes`, to keep the compiled files. Then, compile the code and make a final jar file.
