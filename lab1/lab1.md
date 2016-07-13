@@ -130,9 +130,13 @@ The `Mapper<LongWritable, Text, Text, IntWritable>` refers to the data type of i
 In the `map` method, the first and second parameter refer to the data type of the input key and value to the mapper. The third parameter is the output collector that does the job of taking the output data. With the output collector we need to specify the data types of the output key and value from the mapper. The fourth parameter is used to report the task status internally in Hadoop environment to avoid time outs.
 
 The functionality of the map method is as follows:
-1. Create an `IntWritable` variable `one` with value as 1
+
+1. CCreate an `IntWritable` variable `one` with value as 1
+
 2. Convert the input line in Text type to a String
+
 3. Use a tokenizer to split the line into words
+
 4. Iterate through each word and a form key value pairs as
     1. Assign each work from the tokenizer(of String type) to a Text 'word'
     2. Form key value pairs for each word as (word, one) and push it to the output collector
