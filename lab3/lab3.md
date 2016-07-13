@@ -46,7 +46,7 @@ Saving of the generated RDDs to reliable storage (data checkpointing) is necessa
 ```scala
 ssc.checkpoint("checkpoint")
 ```
-Spark Streaming provides two categories of built-in streaming sources: (i) basic sources, which are directly available in the `StreamingContext` API, e.g., file systems, and socket connections, and (ii) advanced sources, which are available through extra utility classes, e.g., Kafka, Flume, Kinesis, and Twitter. Here we receive data from Kafka. There are two approaches to this: (i) using receivers and Kafka’s high-level API, and (ii) without using receivers. They have different programming models, performance characteristics, and semantics guarantees, so read on for more details. 
+Spark Streaming provides two categories of built-in streaming sources: (i) basic sources, which are directly available in the `StreamingContext` API, e.g., file systems, and socket connections, and (ii) advanced sources, which are available through extra utility classes, e.g., Kafka, Flume, Kinesis, and Twitter. Here we receive data from Kafka. There are two approaches to this: (i) using receivers and Kafka’s high-level API, and (ii) without using receivers.
 
 In the receiver-based approach, the data received from Kafka through a receiver is stored in Spark executors, and then jobs launched by Spark Streaming processes the data. However, under default configuration, this approach can lose data under failures. To ensure zero-data loss, then, you have to additionally enable Write Ahead Logs (WAL) in Spark Streaming that synchronously saves all the received Kafka data into a distributed file system. To use this approach, you need to connect to Kafka through `KafkaUtils.createStream`.
 
