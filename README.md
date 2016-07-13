@@ -73,7 +73,7 @@ cd ISpark-master
 ipython profile create spark
    ``` 
 
-5. Edit the profile by copying the following line in `ipython_config.py`, which is at `~/.ipython/profile_spark/ipython_config.py`. Below we are referring to `ispark-core-assembly-0.2.0-SNAPSHOT.jar`, which is built in step 2. It is located at `ISpark-master/core/target/scala-2.10`.
+5. Edit the profile by copying the following lines in `ipython_config.py`, which is at `~/.ipython/profile_spark/ipython_config.py`. Below we are referring to `ispark-core-assembly-0.2.0-SNAPSHOT.jar`, which is built in step 2. It is located at `ISpark-master/core/target/scala-2.10`.
    ```python
 import os
 c = get_config()
