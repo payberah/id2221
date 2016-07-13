@@ -31,13 +31,13 @@ mkdir -p $HADOOP_HOME/hdfs/datanode
 <configuration>
   <property>
     <name>dfs.namenode.name.dir</name>
-    <value>file:///<HADOOP HOME PATH>/hdfs/namenode</value>
+    <value>file:///<HADOOP_HOME>/hdfs/namenode</value>
     <description>Path on the local filesystem where the NameNode stores the namespace and transaction logs persistently.</description>
   </property>
 
   <property>
     <name>dfs.datanode.data.dir</name>
-    <value>file:///<HADOOP HOME PATH>/hdfs/datanode</value>
+    <value>file:///<HADOOP_HOME>/hdfs/datanode</value>
     <description>Comma separated list of paths on the local filesystem of a DataNode where it should store its blocks.</description>
   </property>
 </configuration>
