@@ -1,5 +1,5 @@
 # Data Intensive Computing - ID2221
-This course consists of four lab assignments that span over different subjects of the lectures as bellow: 
+This course consists of four lab assignments that span over different topics of the course: 
 
 * **Lab 1:** In the first lab assignment you will practice the basics of the data intensive programming by setting up HDFS and Hadoop MapReduce and implementing a simple application on them.
 * **Lab 2:** The second lab assignment is based of the Spark and Spark SQL, and you will learn how to use them to process and analyze data.
