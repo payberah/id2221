@@ -15,18 +15,13 @@ export HADOOP_HOME="<HADOOP PATH>/hadoop-2.6.4"
 export HADOOP_CONFIG="$HADOOP_HOME/etc/hadoop"
    ```
 
-3. Specify the `JAVA_HOME` environment variable in `$HADOOP_CONFIG/hadoop-env.sh`.
-   ```bash
-export JAVA_HOME="<JAVA PATH>"
-   ```
-
-4. Make two folders on local file system, where HDFS namenode and datanode store their data.
+3. Make two folders on local file system, where HDFS namenode and datanode store their data.
    ```bash
 mkdir -p $HADOOP_HOME/hdfs/namenode
 mkdir -p $HADOOP_HOME/hdfs/datanode
    ```
 
-5. The main HDFS configuration file is located at `$HADOOP_CONFIG/hdfs-site.xml`. Specify the folders path, built in step 4.
+4. The main HDFS configuration file is located at `$HADOOP_CONFIG/hdfs-site.xml`. Specify the folders path, built in step 4.
    ```xml
 <configuration>
   <property>
@@ -43,7 +38,7 @@ mkdir -p $HADOOP_HOME/hdfs/datanode
 </configuration>
    ```
 
-6. Specify the URI of the namenode (master) in `$HADOOP_CONFIG/core-site.sh`.
+5. Specify the URI of the namenode (master) in `$HADOOP_CONFIG/core-site.xml`
    ```xml
 <configuration>
   <property>
@@ -54,12 +49,12 @@ mkdir -p $HADOOP_HOME/hdfs/datanode
 </configuration>
    ```
 
-7. Format the namenode directory (DO THIS ONLY ONCE, THE FIRST TIME).
+6. Format the namenode directory (DO THIS ONLY ONCE, THE FIRST TIME).
    ```bash
 $HADOOP_HOME/bin/hdfs namenode -format
    ```
 
-8. Start the namenode and datanode daemons
+7. Start the namenode and datanode daemons
    ```bash
 $HADOOP_HOME/sbin/hadoop-daemon.sh start namenode
 $HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
@@ -76,6 +71,7 @@ $HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
 $HADOOP_HOME/bin/hdfs dfs -mkdir /sics
 
 # Create a file, call it big, on your local filesystem and upload it to HDFS under /sics.
+
 $HADOOP_HOME/bin/hdfs dfs -put big /sics
 
 # View the content of /sics directory
@@ -246,7 +242,8 @@ cd src
 
 mkdir wordcount_classes
 
-javac -classpath $HADOOP_HOME/share/hadoop/common/hadoop-common-2.2.0.jar:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.2.0.jar:$HADOOP_HOME/share/hadoop/common/lib/commons-cli-1.2.jar -d wordcount_classes sics/WordCount.java
+javac -classpath
+$HADOOP_HOME/share/hadoop/common/hadoop-common-2.6.4.jar:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.6.4.jar:$HADOOP_HOME/share/hadoop/common/lib/commons-cli-1.2.jar -d wordcount_classes sics/WordCount.java
 
 jar -cvf wordcount.jar -C wordcount_classes/ .
    ```
