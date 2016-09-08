@@ -343,5 +343,5 @@ The input file, `users.xml`, is in XML format with the following syntax:
   Views="0" UpVotes="506"
   DownVotes="37" AccountId="-1" />
    ```
-You can use `transformXmlToMap` method to read and parse XML files. The file is in the `topten/data` folder.
+The file is in the `topten/data` folder.
 
