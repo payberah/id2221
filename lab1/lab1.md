@@ -122,7 +122,7 @@ public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritab
 
    ```
 
-The `Mapper<LongWritable, Text, Text, IntWritable>` refers to the data type of input and output key-value pairs specific to the mapper or rateher the map method, i.e., `Mapper<Input Key Type, Input Value Type, Output Key Type, Output Value Type>`. In our example, the input to a mapper is a single line, so this Text forms the input value. The input key would a long value assigned in default based on the position of Text in input file. Our output from the mapper is of the format (Word, 1) hence the data type of our output key value pair is `<Text(String),  IntWritable(int)>`.
+The `Mapper<Object, Text, Text, IntWritable>` refers to the data type of input and output key-value pairs specific to the mapper or rateher the map method, i.e., `Mapper<Input Key Type, Input Value Type, Output Key Type, Output Value Type>`. In our example, the input to a mapper is a single line, so this Text forms the input value. The input key would a long value assigned in default based on the position of Text in input file. Our output from the mapper is of the format (Word, 1) hence the data type of our output key value pair is `<Text(String),  IntWritable(int)>`.
 
 In the `map` method, the first and second parameter refer to the data type of the input key and value to the mapper. The third parameter is the output collector that does the job of taking the output data. With the output collector we need to specify the data types of the output key and value from the mapper. The fourth parameter is used to report the task status internally in Hadoop environment to avoid time outs.
 
@@ -138,7 +138,7 @@ The functionality of the map method is as follows:
     
 #### Word Count Reducer
    ```java
-public static class IntSumReducer extends Reducer<Text,IntWritable,Text,IntWritable> {
+public static class IntSumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
   private IntWritable result = new IntWritable();
 
   public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
@@ -200,7 +200,7 @@ public class WordCount {
     }
   }
 
-  public static class IntSumReducer extends Reducer<Text,IntWritable,Text,IntWritable> {
+  public static class IntSumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
     private IntWritable result = new IntWritable();
 
     public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
