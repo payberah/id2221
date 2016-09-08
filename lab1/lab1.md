@@ -269,7 +269,7 @@ $HADOOP_HOME/bin/hadoop jar wordcount.jar sics.WordCount input output
 4. Check the output in HDFS
    ```bash
 $HADOOP_HOME/bin/hdfs dfs -ls output
-$HADOOP_HOME/bin/hdfs dfs -cat output/part-00000
+$HADOOP_HOME/bin/hdfs dfs -cat output/part-r-00000
    ```
 
 ## Part 3: Top Ten
