@@ -23,7 +23,7 @@ sudo apt-get install python-dev libncurses-dev python-pip
 sudo pip install ipython[all]==3.2.1
    ```
 
-3. Download and install Java and Spark on your machine. The easiest way to install Spark is to download its "pre-built for CDH 4" from the [here](http://spark.apache.org/downloads.html).
+3. Download and install Java and Spark on your machine. The easiest way to install Spark is to download its "pre-built for CDH 4" from the [here](http://spark.apache.org/downloads.html). Make sure it is version 1.6.1.
 
 4. Set the environment variables.
    ```bash
@@ -83,7 +83,7 @@ c.KernelManager.kernel_cmd = [spark_home+"/bin/spark-submit",
   "--master", master,
   "--class", "org.tribbloid.ispark.Main",
   "--executor-memory", "2G",
-  "--jars", "<PATH ON YOUR MACIHE>/ispark-core-assembly-0.2.0-SNAPSHOT.jar",
+  "<PATH ON YOUR MACIHE>/ispark-core-assembly-0.2.0-SNAPSHOT.jar",
   "--profile", "{connection_file}", 
   "--parent"]
    ```
