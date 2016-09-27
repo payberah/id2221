@@ -83,7 +83,7 @@ c.KernelManager.kernel_cmd = [spark_home+"/bin/spark-submit",
   "--master", master,
   "--class", "org.tribbloid.ispark.Main",
   "--executor-memory", "2G",
-  "--jars", "<PATH ON YOUR MACIHE>/ispark-core-assembly-0.2.0-SNAPSHOT.jar",
+  "<PATH ON YOUR MACIHE>/ispark-core-assembly-0.2.0-SNAPSHOT.jar",
   "--profile", "{connection_file}", 
   "--parent"]
    ```
