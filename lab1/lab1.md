@@ -9,20 +9,20 @@ The following steps (Part 1 and Part 2) demonstrate how to install HDFS and buil
 1. Download the Hadoop platform from [here](http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.4/hadoop-2.6.4.tar.gz).
 
 2. Set the following environment variables.
-   ```bash
+```bash
 export JAVA_HOME="<JAVA PATH>"
 export HADOOP_HOME="<HADOOP PATH>/hadoop-2.6.4"
 export HADOOP_CONFIG="$HADOOP_HOME/etc/hadoop"
-   ```
+```
 
 3. Make two folders on local file system, where HDFS namenode and datanode store their data.
-   ```bash
+```bash
 mkdir -p $HADOOP_HOME/hdfs/namenode
 mkdir -p $HADOOP_HOME/hdfs/datanode
-   ```
+```
 
 4. The main HDFS configuration file is located at `$HADOOP_CONFIG/hdfs-site.xml`. Specify the folders path, built in step 4.
-   ```xml
+```xml
 <configuration>
   <property>
     <name>dfs.namenode.name.dir</name>
@@ -36,10 +36,10 @@ mkdir -p $HADOOP_HOME/hdfs/datanode
     <description>Comma separated list of paths on the local filesystem of a DataNode where it should store its blocks.</description>
   </property>
 </configuration>
-   ```
+```
 
 5. Specify the URI of the namenode (master) in `$HADOOP_CONFIG/core-site.xml`
-   ```xml
+```xml
 <configuration>
   <property>
     <name>fs.defaultFS</name>
@@ -47,18 +47,18 @@ mkdir -p $HADOOP_HOME/hdfs/datanode
     <description>NameNode URI</description>
   </property>
 </configuration>
-   ```
+```
 
 6. Format the namenode directory (DO THIS ONLY ONCE, THE FIRST TIME).
-   ```bash
+```bash
 $HADOOP_HOME/bin/hdfs namenode -format
-   ```
+```
 
 7. Start the namenode and datanode daemons
-   ```bash
+```bash
 $HADOOP_HOME/sbin/hadoop-daemon.sh start namenode
 $HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
-   ```
+```
 
 ### Test HDFS
 1. Prints out the HDFS running processes, by running the `jps` command in a terminal.
@@ -66,7 +66,7 @@ $HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
    - Namenode: [http://127.0.0.1:50070](http://127.0.0.1:50070)
    - Datanode: [http://127.0.0.1:50075](http://127.0.0.1:50075)
 3. Try HDFS commands
-   ```bash
+```bash
 # Create a new directory /sics on HDFS
 $HADOOP_HOME/bin/hdfs dfs -mkdir /sics
 
@@ -97,7 +97,7 @@ $HADOOP_HOME/bin/hdfs dfs -rm /sics/big
    
 # Delete /sics directory from HDFS
 $HADOOP_HOME/bin/hdfs dfs -rm -r /sics
-   ```
+```
 
 ## Part 2: MapReduce
 
