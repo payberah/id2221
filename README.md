@@ -14,67 +14,68 @@ We have used the IPython/Jupyter notebooks for the lab assignments. Notebooks ar
 The steps to install IPython/Jupyter:
 
 1. Install `pip`, the package management system used to install and manage software packages written in Python.
-   ```bash
+```bash
 sudo apt-get install python-dev libncurses-dev python-pip
-   ```
+```
 
 2. Use `pip` to install IPython. The following command downloads and installs IPython and its main optional dependencies for the notebook, qtconsole, tests, and other functionality.
-   ```bash
+```bash
 sudo pip install ipython[all]==3.2.1
-   ```
+```
 
 3. Download and install Java and Spark on your machine. The easiest way to install Spark is to download its "pre-built for CDH 4" from the [here](http://spark.apache.org/downloads.html).
 
 4. Set the environment variables.
-   ```bash
+```bash
 export JAVA_HOME=<JAVA_PATH>
 export SPARK_HOME=<SPARK_PATH>
 export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip:$SPARK_HOME/python
 export PYSPARK_SUBMIT_ARGS="--master local[2] pyspark-shell"
-   ```
+```
 
 5. Create an IPython profile to support Python programming language.
-   ```bash
+```bash
 ipython profile create pyspark
-   ```
+```
 
 6. Edit the created profile by copying the following lines in `00-pyspark-setup.py`. This file is at `~/.ipython/profile_pyspark/startup/00-pyspark-setup.py`.
-   ```python
+```python
 import os
 import sys
 spark_home = os.environ.get('SPARK_HOME', None)
 sys.path.insert(0, os.path.join(spark_home, 'python'))
 sys.path.insert(0, os.path.join(spark_home, 'python/lib/py4j-0.8.2.1-src.zip'))
 execfile(os.path.join(spark_home, 'python/pyspark/shell.py'))
-   ```
+```
 
 7. Run and test the IPython notebook by running the following command.
-   ```bash
+```bash
 ipython notebook --profile=pyspark --debug
-   ```
+```
 
 ### ISpark Installation
 ISpark is an Apache Spark-shell backend for IPython.
 
 1. Install Maven first, if you do not have it.
-   ```bash
+```bash
 sudo apt-get install maven
-   ```
+```
 
 2. Download ISpark from [here](https://github.com/tribbloid/ISpark/archive/master.zip).
   
 3. ISpark needs to be compiled and packaged into a jar by Maven before being submitted and deployed. Extract the ISpark file you downloaded and run the following command.
-   ```bash
+```bash
 cd ISpark-master
 ./mvn-install.sh
-   ```
+```
+
 4. Create an ISpark profile.
-   ```bash
+```bash
 ipython profile create spark
-   ``` 
+``` 
 
 5. Edit the profile by copying the following lines in `ipython_config.py`, which is at `~/.ipython/profile_spark/ipython_config.py`. Below we are referring to `ispark-core-assembly-0.2.0-SNAPSHOT.jar`, which is built in step 3. It is located at `ISpark-master/core/target/scala-2.10`.
-   ```python
+```python
 import os
 c = get_config()
 spark_home = os.environ['SPARK_HOME']
@@ -86,12 +87,12 @@ c.KernelManager.kernel_cmd = [spark_home+"/bin/spark-submit",
   "<PATH ON YOUR MACIHE>/ispark-core-assembly-0.2.0-SNAPSHOT.jar",
   "--profile", "{connection_file}", 
   "--parent"]
-   ```
+```
 
 6. Run and test the notebook.
-   ```bash
+```bash
 ipython notebook --profile=spark --debug
-   ```
+```
 
 ## Things To Deliver
 The assignments can be done individually or in group of two. For the labs 1 and 3, you should hand in the implemented codes in zip files, and for the other labs, you just need to deliver the completed IPython files.
