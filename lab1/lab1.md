@@ -105,7 +105,7 @@ $HADOOP_HOME/bin/hdfs dfs -rm -r /sics
 WordCount is a simple application that counts the number of occurrences of each word in a given input set. Below we will take a look at the mapper and reducer in detail, and then we present the complete code and show how to compile and run it.
 
 #### Word Count Mapper
-   ```java
+```java
 public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
 
   private final static IntWritable one = new IntWritable(1);
@@ -119,8 +119,7 @@ public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritab
     }
   }
 }
-
-   ```
+```
 
 The `Mapper<Object, Text, Text, IntWritable>` refers to the data type of input and output key-value pairs specific to the mapper or rateher the map method, i.e., `Mapper<Input Key Type, Input Value Type, Output Key Type, Output Value Type>`. In our example, the input to a mapper is a single line, so this Text forms the input value. The input key would a long value assigned in default based on the position of Text in input file. Our output from the mapper is of the format (Word, 1) hence the data type of our output key value pair is `<Text(String),  IntWritable(int)>`.
 
@@ -137,7 +136,7 @@ The functionality of the map method is as follows:
 4. Iterate through each word and form key-value pairs as `(word, one)` and push it to the output collector.
     
 #### Word Count Reducer
-   ```java
+```java
 public static class IntSumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
   private IntWritable result = new IntWritable();
 
@@ -151,7 +150,7 @@ public static class IntSumReducer extends Reducer<Text, IntWritable, Text, IntWr
     context.write(key, result);
   }
 }
-   ```
+```
 
 In `Reducer<Text, IntWritable, Text, IntWritable>`, the first two parameters refer to data type of input key and value to the reducer and the last two refer to data type of output key and value. Our mapper emits output as (apple, 1), (grapes, 1), (apple, 1), etc. This is the input for reducer so here the data types of key and value in java would be `String` and `int`, the equivalent in Hadoop would be `Text` and `IntWritable`. Also we get the output as (word, num. of occurrences) so the data type of output Key Value would be `<Text, IntWritable>`.
 
@@ -168,7 +167,7 @@ The functionality of the reduce method is as follows:
 
 #### Driver Class
 In addition to mapper and reducer calsses, we need a "driver" class to trigger the MapReduce job in Hadoop. In the driver class we provide the name of the job, output key-value data types and the mapper and reducer classes. Bellow you see the complete code of the "word count":
-   ```java
+```java
 package sics;
 
 import java.io.IOException;
@@ -232,14 +231,13 @@ public class WordCount {
     System.exit(job.waitForCompletion(true) ? 0 : 1);
   }
 }
-
-   ```
+```
 
 #### Compile and Run The Code
 Assume we have two input files, `file0` and `file1`, uploaded on HDFS, and our code reads those files and counts their words.
 
 1. Start the HDFS namenode and datanode (if they are not running). Then create a folder `input` in HDFS, and upload the files in it.
-   ```bash
+```bash
 $HADOOP_HOME/sbin/hadoop-daemon.sh start namenode
 $HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
 
@@ -247,10 +245,10 @@ $HADOOP_HOME/bin/hdfs dfs -mkdir -p input
 $HADOOP_HOME/bin/hdfs dfs -put file0 input/file0
 $HADOOP_HOME/bin/hdfs dfs -put file1 input/file1
 $HADOOP_HOME/bin/hdfs dfs -ls input
-   ```
+```
 
 2. Change directory to the `src` folder and make a target directory, `wordcount_classes`, to keep the compiled files. Then, compile the code and make a final jar file.
-   ```bash
+```bash
 cd src
 
 mkdir wordcount_classes
@@ -259,18 +257,18 @@ javac -classpath
 $HADOOP_HOME/share/hadoop/common/hadoop-common-2.6.4.jar:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.6.4.jar:$HADOOP_HOME/share/hadoop/common/lib/commons-cli-1.2.jar -d wordcount_classes sics/WordCount.java
 
 jar -cvf wordcount.jar -C wordcount_classes/ .
-   ```
+```
 
 3. Run the application
-   ```bash
+```bash
 $HADOOP_HOME/bin/hadoop jar wordcount.jar sics.WordCount input output
-   ```
+```
 
 4. Check the output in HDFS
-   ```bash
+```bash
 $HADOOP_HOME/bin/hdfs dfs -ls output
 $HADOOP_HOME/bin/hdfs dfs -cat output/part-r-00000
-   ```
+```
 
 ## Part 3: Top Ten
 The input data of this part is in the `topten` folder. Given the list of user information, print out the information of the top ten users based on their reputation. In your code, each mapper determines the top ten records of its input split and outputs them to the reduce phase. The mappers are filtering their input split to the top ten records, and the reducer is responsible for the final ten. Use `setNumReduceTasks` to configure your job to use only one reducer, because multiple reducers would shard the data and would result in multiple top ten lists.
@@ -278,7 +276,7 @@ The input data of this part is in the `topten` folder. Given the list of user in
 ### The Mapper Code
 You can use `TreeMap` structure in the mapper to store the processed input records. A `TreeMap` is a subclass of `Map` that sorts on key. After all the records have been processed, the top ten records in the `TreeMap` are output to the reducers in the `cleanup` method. This method gets called once after all key-value pairs have been through map.
 
-   ```java
+```java
 public static class TopTenMapper extends Mapper<Object, Text, NullWritable, Text> {
   // Stores a map of user reputation to the record
   private TreeMap<Integer, Text> repToRecordMap = new TreeMap<Integer, Text>();
@@ -304,11 +302,12 @@ public static class TopTenMapper extends Mapper<Object, Text, NullWritable, Text
     }
   }
 }
-   ```
+```
 
 ### The Reducer Code
 The reducer determines its top ten records in a way that's very similar to the mapper. Because we configured our job to have one reducer using `job.setNumReduceTasks(1)` and we used `NullWritable` as our key, there will be one input group for this reducer that contains all the potential top ten records. The reducer iterates through all these records and stores them in a `TreeMap`. After all the values have been iterated over, the values contained in the `TreeMap` are flushed to the file system in descending order. 
-   ```java
+
+```java
 public static class TopTenReducer extends Reducer<NullWritable, Text, NullWritable, Text> {
   // Stores a map of user reputation to the record
   // Overloads the comparator to order the reputations in descending order
@@ -330,11 +329,12 @@ public static class TopTenReducer extends Reducer<NullWritable, Text, NullWritab
     }
   }
 }
-   ```
+```
 
 ### The Input Data
 The input file, `users.xml`, is in XML format with the following syntax:
-   ```xml
+
+```xml
 <row Id="-1" Reputation="1"
   CreationDate="2014-05-13T21:29:22.820" DisplayName="Community"
   LastAccessDate="2014-05-13T21:29:22.820"
@@ -342,6 +342,6 @@ The input file, `users.xml`, is in XML format with the following syntax:
   Location="on the server farm" AboutMe="..;"
   Views="0" UpVotes="506"
   DownVotes="37" AccountId="-1" />
-   ```
+```
 The file is in the `topten/data` folder.
 
