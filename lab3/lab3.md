@@ -1,5 +1,6 @@
 <p align="center"><img src="logo/spark.png" alt="Hadoop Logo" width="250"/></p>
-# **Lab 3 - Spark Streaming**
+
+# Lab 3 - Spark Streaming
 The following steps demonstrate how to create a simple Spark streaming application. In this notebook you will see how to read data stream from Kafka, make a base DStream, and appy functions to it. In this assignment, we will go through the code step by step, but you will need to complete the code as a standalone application.
 
 Spark Streaming is an extension of the core Spark API that enables scalable, high-throughput, fault-tolerant stream processing of live data streams. Spark Streaming provides a high-level abstraction called *discretized stream* or `DStream` that represents a continuous stream of data. `DStream`s can be created either from input data streams from sources such as Kafka, Flume, and Kinesis, or by applying high-level operations on other `DStream`s. Internally, a `DStream` is represented as a sequence of RDDs.
