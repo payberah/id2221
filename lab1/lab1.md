@@ -1,4 +1,5 @@
 <p align="center"><img src="logo/hadoop.png" alt="Hadoop Logo" width="350"/></p>
+
 # Lab 1 - Hadoop MapReduce and HDFS
 The following steps (Part 1 and Part 2) demonstrate how to install HDFS and build and run "word count" application with Hadoop MapReduce. Then, in Part 3, you are asked to implement a MapReduce code to get the top ten users by their reputation from a list.
 
