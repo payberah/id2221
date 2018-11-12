@@ -23,7 +23,7 @@ sudo apt-get install python-dev libncurses-dev python-pip
 sudo pip install ipython[all]==3.2.1
 ```
 
-3. Download and install Java and Spark on your machine. The easiest way to install Spark is to download its "pre-built for CDH 4" from the [here](http://spark.apache.org/downloads.html).
+3. Download and install Java and Spark on your machine. The easiest way to install Spark is to download its "pre-built for CDH 4" from the [here](http://spark.apache.org/downloads.html). Make sure it is version 1.6.1.
 
 4. Set the environment variables.
 ```bash
